@@ -3,8 +3,18 @@ package com.metransfert.network;
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+/**
+ * A Stream to write Packet data (Packet, headers, network formatted strings...)
+ * @author Alexandre
+ *
+ */
 public class PacketOutputStream extends DataOutputStream{
 
+	/**
+	 * Constructs a PacketOutputStream encapsulating a given BufferedInputStream
+	 * @param in
+	 */
 	public PacketOutputStream(BufferedOutputStream out) {
 		super(out);
 	}

@@ -5,10 +5,19 @@ import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 
+/**
+ * A Stream to read Packet data (Packet, headers, network formatted strings...)
+ * @author Alexandre
+ *
+ */
 public class PacketInputStream extends DataInputStream {
 
 	public static final int BLOCK_SIZE = 4096;
 	
+	/**
+	 * Constructs a PacketInputStream encapsulating a given BufferedInputStream
+	 * @param in
+	 */
 	public PacketInputStream(BufferedInputStream in) {
 		super(in);
 	}

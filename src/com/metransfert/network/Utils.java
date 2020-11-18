@@ -8,9 +8,13 @@ import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 
+/**
+ * A class that holds several utilities methods
+ * @author Alexandre
+ *
+ */
 public class Utils {
-	
-	
+
 	//============ BUFFER HELPER METHODS =============
 	
 	//TODO : maybe create a child class of java.nio.ByteBuffer that implements these two methods instead of having static helper methods

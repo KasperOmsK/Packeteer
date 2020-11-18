@@ -48,6 +48,10 @@ public class Packet {
 	 * </pre>
 	 */
 	public static final byte PACKETTYPE_FILE = 1;
+	
+	/**
+	 * Type ID of a get packet
+	 */
 	public static final byte PACKETTYPE_GET = 2;
 	public static final byte PACKETTYPE_UPLOAD_RESULT = 3;
 	public static final byte PACKETTYPE_INFO = 4;
