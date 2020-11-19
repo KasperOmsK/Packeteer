@@ -21,7 +21,7 @@ public class PacketBuilder {
 		return this;
 	}
 	
-	public PacketBuilder writeByte(byte b){
+	public PacketBuilder write(byte b){
 		fields.add(b);
 		return this;
 	}
@@ -41,8 +41,8 @@ public class PacketBuilder {
 				payLen += 4;
 			else if(b instanceof Byte)
 				payLen += 1;
-			else if(b instanceof Byte[])
-				payLen += ((Byte[])b).length;
+			else if(b instanceof byte[])
+				payLen += ((byte[])b).length;
 			else
 				throw new RuntimeException("Invalid field type at position " + i + " (" + b.toString() + ")" );
 			i++;
@@ -56,8 +56,8 @@ public class PacketBuilder {
 				newBuffer.putInt((Integer)b);
 			else if(b instanceof Byte)
 				newBuffer.put((Byte)b);
-			else if(b instanceof Byte[]){
-				Byte[] array = (Byte[])b;
+			else if(b instanceof byte[]){
+				byte[] array = (byte[])b;
 				for(int c=0; c<array.length; c++){
 					newBuffer.put(array[c]);
 				}

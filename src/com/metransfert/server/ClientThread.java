@@ -104,9 +104,10 @@ public class ClientThread extends Thread {
 			});
 	
 			//answer
-			Packet fileResult = PacketBuilder.newBuilder(MeTransfertPacketTypes.FILERESULT).build();
+			Packet fileResult = PacketBuilder.newBuilder(MeTransfertPacketTypes.FILERESULT)
+											.write((byte)0).write(newStore.ID).build();
 			
-			//out.write(np);
+			out.write(fileResult);
 			out.flush();
 			
 			}catch(Exception e){
