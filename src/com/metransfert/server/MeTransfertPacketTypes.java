@@ -1,13 +1,47 @@
-package com.metransfert.network;
+package com.metransfert.server;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import com.metransfert.network.Packet;
+import com.metransfert.network.Utils;
 import com.metransfert.network.exceptions.FileTooLargeException;
 
-public class PacketHelper {
+public class MeTransfertPacketTypes {
+	
+	public static final byte RESERVED = 0;
+	
+	/**
+	 * Type ID of a file packet
+	 * <pre>
+	 * File packet:
+	 * 	ID : 1
+	 * 	Direction : Client <---> Server
+	 *	Description : This packet will encapsulate file transfered between client and server (For uploads and downloads)
+	 * 
+	 * 'File' packet data layout : 
+	 *<============ payload_len bytes ==============> (N < 2^4)
+	 *+----------------+----------------------------+
+	 *| Str fileName   |        Byte[] data         |
+	 *+----------------+----------------------------+
+	 *<====n bytes=====><======= N-n bytes =========>
+	 * </pre>
+	 */
+	public static final byte FILE = 1;
+	
+	public static final byte FILERESULT = 3;
+	
+	/**
+	 * Type ID of a get packet
+	 */
+	public static final byte REQFILE = 2;
+	
+	
+	public static final byte REQINFO = 4;
+	
+	public static final byte INFORESULT = 5;
 	
 	/**
 	 * -Reads a file and encapsulate its content in a file packet format (cf. Documentation. File packet payload layout)
@@ -44,7 +78,6 @@ public class PacketHelper {
 		}
 		fis.close();
 		
-		return new Packet(Packet.PACKETTYPE_FILE, payloadBuffer.array());
+		return new Packet(MeTransfertPacketTypes.FILE, payloadBuffer.array());
 	}
-
 }

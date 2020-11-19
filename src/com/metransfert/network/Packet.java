@@ -23,38 +23,10 @@ import java.nio.ByteBuffer;
  * @author Alexandre
  */
 public class Packet {
-	
 	/**
 	 * the size of all packets header (4 bytes for the len + 1 byte for the type)
 	 */
 	public static final int HEADER_LEN = 5; 
-	
-	public static final byte PACKETTYPE_RESERVED = 0;
-	
-	/**
-	 * Type ID of a file packet
-	 * <pre>
-	 * File packet:
-	 * 	ID : 1
-	 * 	Direction : Client <---> Server
-	 *	Description : This packet will encapsulate file transfered between client and server (For uploads and downloads)
-	 * 
-	 * 'File' packet data layout : 
-	 *<============ payload_len bytes ==============> (N < 2^4)
-	 *+----------------+----------------------------+
-	 *| Str fileName   |        Byte[] data         |
-	 *+----------------+----------------------------+
-	 *<====n bytes=====><======= N-n bytes =========>
-	 * </pre>
-	 */
-	public static final byte PACKETTYPE_FILE = 1;
-	
-	/**
-	 * Type ID of a get packet
-	 */
-	public static final byte PACKETTYPE_GET = 2;
-	public static final byte PACKETTYPE_UPLOAD_RESULT = 3;
-	public static final byte PACKETTYPE_INFO = 4;
 	
 	private ByteBuffer payloadBuffer = null;
 	private byte packetType = 0;
@@ -153,5 +125,10 @@ public class Packet {
 	public static boolean canEncapsulate(byte[] data) throws Exception{
 		throw new Exception("Not yet implemented");
 		//return true;
+	}
+	
+	public static Packet allocate(byte type, int payloadLen){
+		byte[] payload = new byte[payloadLen];
+		return new Packet(type, payload);
 	}
 }
