@@ -24,6 +24,7 @@ public class PacketOutputStream extends DataOutputStream{
 	 * @param p
 	 * @throws IOException
 	 */
+	@Deprecated
 	public void write(Packet p) throws IOException{
 		write(p.getHeader());
 		this.write(p.getPayload());
@@ -39,9 +40,10 @@ public class PacketOutputStream extends DataOutputStream{
 	 * @param h
 	 * @throws IOException
 	 */
+	@Deprecated
 	public void write(PacketHeader h) throws IOException{
 		if(h == null)
-			throw new NullPointerException("PacketHeader argument cannot be null");
+			throw new IllegalArgumentException("PacketHeader argument cannot be null");
 		
 		this.writeInt(h.payloadLength);
 		this.writeByte(h.type);
@@ -57,9 +59,10 @@ public class PacketOutputStream extends DataOutputStream{
 	 * @param string
 	 * @throws IOException
 	 */
+	@Deprecated
 	public void write(String string) throws IOException{
 		if (string == null)
-			throw new NullPointerException("String argument cannot be null");
+			throw new IllegalArgumentException("String argument cannot be null");
 				
 		byte[] bytes = string.getBytes();
 		writeInt(bytes.length);

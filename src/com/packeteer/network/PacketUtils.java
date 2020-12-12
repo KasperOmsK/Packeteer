@@ -14,9 +14,10 @@ import java.nio.ByteBuffer;
  *
  */
 public class PacketUtils {
-
+	
 	//============ BUFFER HELPER METHODS =============
 	
+	//TODO: All these helper class for reading/writing custom types on bytebuffers (e.g writeNetworkString, readInt) should not be in a static class like this one. Rather we should have our own CustomByteBuffer class deriving from java.nio.ByteBuffer which would implement theses methods
 	
 	/**
 	 * Reads an integer in the buffer at its current index and then decrement the index by 4
@@ -73,14 +74,14 @@ public class PacketUtils {
 	 */
 	public static void writeNetworkString(ByteBuffer buffer, String string) {
 		if (buffer == null)
-			throw new NullPointerException("Bytebuffer argument cannot be null");
+			throw new IllegalArgumentException("Bytebuffer argument cannot be null");
 		if (string == null)
-			throw new NullPointerException("String argument cannot be null");
+			throw new IllegalArgumentException("String argument cannot be null");
 				
 		//NOTE : Pas besoin de vérifier si 'b' est assez grand avant d'écrire car b.putInt ci dessous va renvoyer une runtime exception si jamais ce nest pas le cas
 		byte[] bytes = string.getBytes();
-		buffer.putInt(bytes.length);
-		buffer.put(string.getBytes()); // TODO gérer encodage ici
+		buffer.putInt(bytes.length); //TODO : faire attention à l'encodage ici
+		buffer.put(string.getBytes());
 	}
 
 	/**
@@ -93,7 +94,7 @@ public class PacketUtils {
 	 */
 	public static int calculateNetworkStringLength(String string) {
 		if (string == null)
-			throw new NullPointerException("String argument cannot be null");
+			throw new IllegalArgumentException("String argument cannot be null");
 
 		return 4+string.getBytes().length; // 4 bytes for len (int) + number of bytes
 										// char
@@ -108,7 +109,7 @@ public class PacketUtils {
 	 * @throws BufferUnderflowException if the buffer end is reached before a string is read
 	 */
 	public static String readNetworkString(ByteBuffer buffer) {
-		String s = "";
+		String s = ""; //TODO: this should not throw a BufferUnderflowException but a EOFException (because BufferUnderflow is a runtime exception, but we expect callers to handle error when the buffer is too small to read a string
 		int len = buffer.getInt();
 		for (int i = 0; i < len; i++) {
 			s += (char)buffer.get(); //TODO : faire attention à l'encodage ici, si la chaine contient un character plus grand que 1 octet, ça va afficher nimorte quoi

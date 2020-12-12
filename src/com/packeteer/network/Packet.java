@@ -41,7 +41,7 @@ public class Packet {
 	public Packet(byte type, byte[] payload){
 		
 		if(payload == null)
-			throw new NullPointerException("Argument 'byte[] payload' cannot be null");
+			throw new IllegalArgumentException("Argument 'byte[] payload' cannot be null");
 		
 		try{
 			Math.addExact(payload.length, HEADER_LEN);
@@ -110,10 +110,5 @@ public class Packet {
 	public static boolean canEncapsulate(byte[] data) throws Exception{
 		throw new Exception("Not yet implemented");
 		//return true;
-	}
-	
-	public static Packet allocate(byte type, int payloadLen){
-		byte[] payload = new byte[payloadLen];
-		return new Packet(type, payload);
 	}
 }

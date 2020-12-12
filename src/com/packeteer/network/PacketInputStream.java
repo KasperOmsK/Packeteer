@@ -5,9 +5,6 @@ import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 
-
-//TODO: Changer de type en long pour la taille d'un paquet car Java casse les c***lles et a décidé qu'un unsigned int ça n'existait pas.
-
 /**
  * A Stream to read Packet data (Packet, headers, network formatted strings...)
  * @author Alexandre
@@ -33,7 +30,11 @@ public class PacketInputStream extends DataInputStream {
 	public Packet readPacket() throws IOException{
 		PacketHeader h = readHeader();
 		byte[] data = new byte[h.payloadLength];
-		read(data, 0, h.payloadLength);
+		int read = 0;
+		while(read < h.payloadLength){
+			data[read] = readByte();
+			read++;
+		}
 		return new Packet(h.type, data);
 	}
 	
@@ -87,7 +88,7 @@ public class PacketInputStream extends DataInputStream {
 	 */
 	public void readPacket(BlockHandler handler, int block_size) throws Exception{ 
 		if(handler == null)
-			throw new NullPointerException("handler cannot be null");
+			throw new IllegalArgumentException("handler cannot be null");
 		
 		PacketHeader h = this.readHeader();
 		int remaining = h.payloadLength;
