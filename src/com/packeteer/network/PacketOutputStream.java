@@ -1,8 +1,8 @@
 package com.packeteer.network;
 
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * A Stream to write Packet data (Packet, headers, network formatted strings...)
@@ -15,7 +15,7 @@ public class PacketOutputStream extends DataOutputStream{
 	 * Constructs a PacketOutputStream encapsulating a given BufferedInputStream
 	 * @param in
 	 */
-	public PacketOutputStream(OutputStream out) {
+	public PacketOutputStream(BufferedOutputStream out) {
 		super(out);
 	}
 
@@ -24,7 +24,6 @@ public class PacketOutputStream extends DataOutputStream{
 	 * @param p
 	 * @throws IOException
 	 */
-	@Deprecated
 	public void write(Packet p) throws IOException{
 		write(p.getHeader());
 		this.write(p.getPayload());
@@ -40,7 +39,6 @@ public class PacketOutputStream extends DataOutputStream{
 	 * @param h
 	 * @throws IOException
 	 */
-	@Deprecated
 	public void write(PacketHeader h) throws IOException{
 		if(h == null)
 			throw new IllegalArgumentException("PacketHeader argument cannot be null");
@@ -59,7 +57,6 @@ public class PacketOutputStream extends DataOutputStream{
 	 * @param string
 	 * @throws IOException
 	 */
-	@Deprecated
 	public void write(String string) throws IOException{
 		if (string == null)
 			throw new IllegalArgumentException("String argument cannot be null");
